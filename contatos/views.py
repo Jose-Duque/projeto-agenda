@@ -8,7 +8,7 @@ def index(request):
     })
 
 def show_contato(request, id_contato):
-    contato = Contato.object.get(id_contato)
-    return render(request, 'contatos/sow_contato.html', {
+    contato = Contato.objects.get(id=id_contato)
+    return render(request, 'contatos/show_contato.html', {
         'contato': contato
     })
