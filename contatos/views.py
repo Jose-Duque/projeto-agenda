@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404, Http404
+from django.shortcuts import render, get_object_or_404, Http404, redirect
 from .models import Contato
 from django.core.paginator import Paginator
 from django.db.models import Q, Value
 from django.db.models.functions import Concat
+from django.contrib import messages
 
 def index(request):
     contatos_list = Contato.objects.order_by('nome')
@@ -31,8 +32,9 @@ def busca(request):
     campos = Concat('nome', Value(' '), 'sobrenome')
     print(termo)
 
-    if not termo:
-        raise Http404
+    if not termo or termo is None:
+        messages.add_message(request, messages.ERROR, 'Campo de busca fazio')
+        return redirect('index')
 
     contatos_list = Contato.objects.annotate(nome_completo=campos).filter(
         nome_completo__contains=termo

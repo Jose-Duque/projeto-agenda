@@ -25,8 +25,8 @@
                    type="search"
                    placeholder="Busca"
                    name="termo"
-                   value="{{ request.GET.termo }}"
-            >
+                   value="{{ request.GET.termo }}">
+            {% include 'parciais/_messages.html' %}
           </div>
         </form>
         {% block conteudo %} {% endblock %}
